@@ -1,13 +1,16 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.model.board;
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.user.User;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Board_Configuration")
 public class BoardConfiguration implements Serializable {
@@ -21,13 +24,13 @@ public class BoardConfiguration implements Serializable {
     @Column(name = "is_private")
     private Boolean isPrivate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Board board;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private User administrator;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "Board_Moderators",
             joinColumns = @JoinColumn(name = "moderator_id"),
@@ -35,7 +38,7 @@ public class BoardConfiguration implements Serializable {
     )
     private Set<User> moderators;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "Board_Allowed_Users",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -43,7 +46,7 @@ public class BoardConfiguration implements Serializable {
     )
     private Set<User> allowedUsers;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "Board_Blocked_Users",
             joinColumns = @JoinColumn(name = "user_id"),

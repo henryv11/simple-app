@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -25,20 +26,32 @@ public class UserService {
     @Autowired
     private UserPreferencesRepository userPreferencesRepository;
 
-    public User createUser(User user) {
-        if (user.getId() == null) {
-            return userRepository.save(user);
-        }
-        return null;
+    public User createUser(String userName, String password, String firstName,
+                           String lastName, String email) {
+        // Create user
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setPosts(new HashSet<>());
+
+        // Create person
+        Person person = new Person();
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        person.setEmail(email);
+        person.setUser(user);
+
+        // Create user preferences
+        UserPreferences userPreferences = new UserPreferences();
+        userPreferences.setFollowedBoards(new HashSet<>());
+        userPreferences.setFollowedThreads(new HashSet<>());
+        userPreferences.setUser(user);
+
+        // Make connections for user
+        user.setPerson(person);
+        user.setUserPreferences(userPreferences);
+
+        // Save and return user
+        return userRepository.save(user);
     }
-
-    public UserPreferences updateUserPreferences(UserPreferences userPreferences) {
-        Optional<UserPreferences> userPreferencesOptional = userPreferencesRepository.findById(userPreferences.getId());
-        if (userPreferencesOptional.isPresent()) {
-            return userPreferencesRepository.save(userPreferences);
-        }
-        return null;
-    }
-
-
 }

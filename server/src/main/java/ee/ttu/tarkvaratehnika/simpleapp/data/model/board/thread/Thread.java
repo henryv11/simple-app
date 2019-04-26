@@ -1,13 +1,18 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread;
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.Board;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Thread")
 public class Thread implements Serializable {
@@ -18,8 +23,11 @@ public class Thread implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "time_stamp")
-    private String timeStamp;
+    @CreationTimestamp
+    @Column(name = "creation_time_stamp")
+    private Date creationTimeStamp;
+
+    private String title;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -31,4 +39,9 @@ public class Thread implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
+
+    public Post addPost(Post post) {
+        posts.add(post);
+        return post;
+    }
 }

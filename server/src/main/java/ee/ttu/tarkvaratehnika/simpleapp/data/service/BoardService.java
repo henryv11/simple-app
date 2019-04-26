@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,7 @@ public class BoardService {
     @Autowired
     private BoardConfigurationRepository boardConfigurationRepository;
 
-    public Board createBoard(Long userId, String title, String description, String timeStamp, Boolean isPrivate) {
+    public Board createBoard(Long userId, String title, String description, Boolean isPrivate) {
         // Check if user exists
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
@@ -48,7 +49,6 @@ public class BoardService {
             Board newBoard = new Board();
             newBoard.setDescription(description);
             newBoard.setTitle(title);
-            newBoard.setTimeStamp(timeStamp);
             newBoard.setThreads(new HashSet<>());
             newBoard.setBoardConfiguration(newBoardConfiguration);
 
@@ -58,6 +58,37 @@ public class BoardService {
 
             // Save and return board
             return boardRepository.save(newBoard);
+        }
+        return null;
+    }
+
+    public BoardConfiguration editBoardConfiguration(Long boardConfigurationId, Boolean isPrivate, Long administratorId,
+                                          List<Long> allowedUserIds, List<Long> blockedUserIds,
+                                          List<Long> moderatorIds) {
+        // Check if administrator exists
+        Optional<User> administratorOptional = userRepository.findById(administratorId);
+        if (administratorOptional.isPresent()) {
+            // Check if board configuration exists
+            Optional<BoardConfiguration> boardConfigurationOptional =
+                    boardConfigurationRepository.findById(boardConfigurationId);
+            if (boardConfigurationOptional.isPresent()) {
+                // Set required objects
+                BoardConfiguration boardConfiguration = boardConfigurationOptional.get();
+                User administrator = administratorOptional.get();
+                List<User> moderators = userRepository.findAllById(moderatorIds);
+                List<User> allowedUsers = userRepository.findAllById(allowedUserIds);
+                List<User> blockedUsers = userRepository.findAllById(blockedUserIds);
+
+                // Make changes
+                boardConfiguration.setIsPrivate(isPrivate);
+                boardConfiguration.setAdministrator(administrator);
+                boardConfiguration.setModerators(new HashSet<>(moderators));
+                boardConfiguration.setAllowedUsers(new HashSet<>(allowedUsers));
+                boardConfiguration.setBlockedUsers(new HashSet<>(blockedUsers));
+
+                // Save and return board configuration
+                return boardConfigurationRepository.save(boardConfiguration);
+            }
         }
         return null;
     }

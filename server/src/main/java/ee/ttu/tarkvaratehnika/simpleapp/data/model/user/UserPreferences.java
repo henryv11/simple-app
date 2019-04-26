@@ -2,13 +2,16 @@ package ee.ttu.tarkvaratehnika.simpleapp.data.model.user;
 
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Thread;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "User_Preferences")
 public class UserPreferences implements Serializable {
@@ -37,5 +40,4 @@ public class UserPreferences implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_preferences_id")
     )
     private Set<Thread> followedBoards;
-
 }

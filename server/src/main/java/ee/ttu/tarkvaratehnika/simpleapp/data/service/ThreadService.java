@@ -31,14 +31,13 @@ public class ThreadService {
     @Autowired
     private UserRepository userRepository;
 
-    public Thread createThread(Long boardId, Long userId, String title, String timeStamp) {
+    public Thread createThread(Long boardId, Long userId, String title) {
         // Check if user exists
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             // Check if board exists
             Optional<Board> boardOptional = boardRepository.findById(boardId);
             if (boardOptional.isPresent()) {
-
                 // Set required objects
                 Board board = boardOptional.get();
 
@@ -46,14 +45,13 @@ public class ThreadService {
                 Thread newThread = new Thread();
                 newThread.setBoard(board);
                 newThread.setPosts(new HashSet<>());
-                newThread.setTimeStamp(timeStamp);
                 newThread.setTitle(title);
 
                 // Save thread
                 final Thread thread = threadRepository.save(newThread);
 
                 // Make connections
-                board.getThreads().add(thread);
+                board.addThread(thread);
 
                 // Save connections
                 boardRepository.save(board);
@@ -64,14 +62,13 @@ public class ThreadService {
         return null;
     }
 
-    public Post createPost(Long threadId, Long userId, String timeStamp, String content, Boolean isOriginal, List<Long> replyToIds) {
+    public Post createPost(Long threadId, Long userId, String content, Boolean isOriginal, List<Long> replyToIds) {
         // Check if user exists
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             // Check if thread exists
             Optional<Thread> threadOptional = threadRepository.findById(threadId);
             if (threadOptional.isPresent()) {
-
                 // Set required objects
                 User user = userOptional.get();
                 Thread thread = threadOptional.get();
@@ -81,18 +78,18 @@ public class ThreadService {
                 Post newPost = new Post();
                 newPost.setThread(thread);
                 newPost.setReplyTo(new HashSet<>(replyTo));
+                newPost.setReplyBy(new HashSet<>());
                 newPost.setAuthor(user);
                 newPost.setContent(content);
-                newPost.setTimeStamp(timeStamp);
                 newPost.setIsOriginal(isOriginal);
 
                 // Save post
                 final Post post = postRepository.save(newPost);
 
                 // Make connections
-                replyTo.forEach(p -> p.getReplyBy().add(post));
-                thread.getPosts().add(post);
-                user.getPosts().add(post);
+                replyTo.forEach(p -> p.addReplyBy(post));
+                thread.addPost(post);
+                user.addPost(post);
 
                 // Save Connections
                 postRepository.saveAll(replyTo);

@@ -1,12 +1,15 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.model.user;
 
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Person")
 public class Person implements Serializable {
@@ -17,7 +20,7 @@ public class Person implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private User user;
 
     @Column(name = "first_name")

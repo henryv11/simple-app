@@ -1,13 +1,18 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.model.user;
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Post;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "User")
 public class User implements Serializable {
@@ -24,16 +29,17 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "time_stamp")
-    private String timeStamp;
+    @CreationTimestamp
+    @Column(name = "creation_time_stamp")
+    private Date creationTimeStamp;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Person person;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private UserPreferences userPreferences;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "User_Posts",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -41,4 +47,9 @@ public class User implements Serializable {
     )
     private Set<Post> posts;
 
+    public Post addPost(Post post) {
+        System.out.println(post);
+        posts.add(post);
+        return post;
+    }
 }
