@@ -1,7 +1,7 @@
 package ee.ttu.tarkvaratehnika.simpleapp.controller;
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.Message;
-import ee.ttu.tarkvaratehnika.simpleapp.data.repository.MessageService;
+import ee.ttu.tarkvaratehnika.simpleapp.data.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

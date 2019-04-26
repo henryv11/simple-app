@@ -1,6 +1,7 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.repository;
+package ee.ttu.tarkvaratehnika.simpleapp.data.service;
 
 import ee.ttu.tarkvaratehnika.simpleapp.data.model.Message;
+import ee.ttu.tarkvaratehnika.simpleapp.data.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 
