@@ -51,7 +51,6 @@
 </template>
 
 <script>
-var serverBaseUrl = "http://localhost:8080";
 
 export default {
   name: "PostMessage",
@@ -72,7 +71,7 @@ export default {
       this.form.time = new Date().getTime().toString();
       this.$http({
         method: "post",
-        url: serverBaseUrl + "/messages/save",
+        url: this.$serverBaseUrl + "/messages/save",
         data: JSON.stringify(this.form),
         headers: { "Content-Type": "application/json" }
       })

@@ -26,7 +26,6 @@
 
 <script>
 import { setInterval, clearInterval } from "timers";
-var serverBaseUrl = "http://localhost:8080";
 
 export default {
   name: "MessageView",
@@ -55,7 +54,7 @@ export default {
       this.$http({
         method: "get",
         url:
-          serverBaseUrl +
+          this.$serverBaseUrl +
           "/messages/all/" +
           (this.currentPage - 1) +
           "/" +
@@ -67,7 +66,7 @@ export default {
     fetchPageCount() {
       this.$http({
         method: "get",
-        url: serverBaseUrl + "/messages/count"
+        url: this.$serverBaseUrl + "/messages/count"
       }).then(response => {
         this.messageCount = response.data;
       });

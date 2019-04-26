@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "User_Preferences")
 public class UserPreferences implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,10 +19,23 @@ public class UserPreferences implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "User_Followed_Threads",
+            joinColumns = @JoinColumn(name = "thread_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_preferences_id")
+    )
     private Set<Thread> followedThreads;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "User_Followed_Boards",
+            joinColumns = @JoinColumn(name = "board_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_preferences_id")
+    )
     private Set<Thread> followedBoards;
 
 }

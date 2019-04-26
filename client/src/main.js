@@ -7,6 +7,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
 Vue.prototype.$http = axios;
+Vue.prototype.$serverBaseUrl = "http://localhost:8080";
 Vue.config.productionTip = false;
 
 new Vue({

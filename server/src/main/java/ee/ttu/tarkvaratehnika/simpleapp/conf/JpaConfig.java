@@ -34,8 +34,7 @@ public class JpaConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        //dataSource.setUrl("jdbc:h2:tcp://localhost/~/messagedb");
-        dataSource.setUrl("jdbc:h2:mem:message_db;DB_CLOSE_DELAY=-1");
+        dataSource.setUrl("jdbc:h2:mem:message_db;DB_CLOSE_DELAY=-1;MODE=MySQL;MV_STORE=FALSE;MVCC=FALSE");
         dataSource.setUsername("sa");
         dataSource.setPassword("password");
         return dataSource;
@@ -49,11 +48,12 @@ public class JpaConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("spring.h2.console.enabled", "true");
+        properties.setProperty("spring.h2.console.path", "/h2console");
         return properties;
     }
 }

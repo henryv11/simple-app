@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "User")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,17 +18,27 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
 
-    private Person person;
-
+    @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "time_stamp")
     private String timeStamp;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Person person;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private UserPreferences userPreferences;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "User_Posts",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<Post> posts;
 
 }

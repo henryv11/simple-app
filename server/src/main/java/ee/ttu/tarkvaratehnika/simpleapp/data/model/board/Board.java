@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "Board")
 public class Board implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,15 +19,23 @@ public class Board implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "time_stamp")
     private String timeStamp;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY)
     private BoardConfiguration boardConfiguration;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Board_Threads",
+            joinColumns = @JoinColumn(name = "thread_id"),
+            inverseJoinColumns = @JoinColumn(name = "board_id")
+    )
     private Set<Thread> threads;
 }

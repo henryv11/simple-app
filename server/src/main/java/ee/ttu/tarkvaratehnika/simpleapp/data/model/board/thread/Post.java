@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "Post")
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,10 +22,10 @@ public class Post implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Thread thread;
 
-    private Boolean isOriginal;
-
+    @Column(name = "time_stamp")
     private String timeStamp;
 
+    @Column(name = "content")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +33,7 @@ public class Post implements Serializable {
 
     @ManyToMany
     @JoinTable(
+            name = "Post_Replies",
             joinColumns = {
                     @JoinColumn(
                             name = "replier_id",
