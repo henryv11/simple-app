@@ -19,6 +19,8 @@ public class BoardConfiguration implements Serializable {
 
     private Boolean isPrivate;
 
+    private Board board;
+
     @OneToOne(fetch = FetchType.LAZY)
     private User administrator;
 

@@ -24,6 +24,7 @@ public class Board implements Serializable {
 
     private String timeStamp;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
     private BoardConfiguration boardConfiguration;
 
     @OneToMany(fetch = FetchType.LAZY)

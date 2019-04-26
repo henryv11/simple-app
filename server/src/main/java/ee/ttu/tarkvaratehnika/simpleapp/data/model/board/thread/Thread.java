@@ -17,11 +17,14 @@ public class Thread implements Serializable {
     @GeneratedValue
     private Long id;
 
-    private String createdAtTimeStamp;
+    private String timeStamp;
+
+    private String title;
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Post> posts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
+
 }

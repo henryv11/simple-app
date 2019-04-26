@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,6 +21,8 @@ public class Post implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Thread thread;
 
+    private Boolean isOriginal;
+
     private String timeStamp;
 
     private String content;
@@ -27,6 +30,23 @@ public class Post implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 
-    @OneToOne
-    private Reply reply;
+    @ManyToMany
+    @JoinTable(
+            joinColumns = {
+                    @JoinColumn(
+                            name = "replier_id",
+                            referencedColumnName = "id",
+                            nullable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = "original_poster_id",
+                            referencedColumnName = "id",
+                            nullable = false)
+            }
+    )
+    private Set<Post> replyTo;
+
+    @ManyToMany(mappedBy = "replyTo")
+    private Set<Post> replyBy;
 }
