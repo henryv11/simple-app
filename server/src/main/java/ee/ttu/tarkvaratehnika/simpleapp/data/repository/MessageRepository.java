@@ -1,6 +1,6 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.repository;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.Message;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

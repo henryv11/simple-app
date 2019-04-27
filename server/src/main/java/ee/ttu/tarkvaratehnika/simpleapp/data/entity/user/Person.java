@@ -1,7 +1,9 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.model.user;
+package ee.ttu.tarkvaratehnika.simpleapp.data.entity.user;
 
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;

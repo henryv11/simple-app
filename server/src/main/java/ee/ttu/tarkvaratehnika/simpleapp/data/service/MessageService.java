@@ -1,10 +1,9 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.service;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.Message;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.Message;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

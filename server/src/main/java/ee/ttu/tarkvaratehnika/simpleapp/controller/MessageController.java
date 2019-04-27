@@ -1,6 +1,6 @@
 package ee.ttu.tarkvaratehnika.simpleapp.controller;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.Message;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.Message;
 import ee.ttu.tarkvaratehnika.simpleapp.data.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class MessageController {
     }
 
     @RequestMapping(
-            path="/count",
+            path = "/count",
             method = RequestMethod.GET
     )
     public long messageCount() {

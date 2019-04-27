@@ -1,9 +1,9 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.service;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.Board;
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Post;
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Thread;
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.user.User;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.Board;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.thread.Post;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.thread.Thread;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.user.User;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.BoardRepository;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.thread.PostRepository;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.thread.ThreadRepository;
@@ -12,12 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class ThreadService {
-
 
     @Autowired
     private PostRepository postRepository;
@@ -101,5 +102,4 @@ public class ThreadService {
         }
         return null;
     }
-
 }

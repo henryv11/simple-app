@@ -1,7 +1,10 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread;
+package ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.thread;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.Board;
-import lombok.*;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.Board;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -29,7 +32,7 @@ public class Thread implements Serializable {
 
     private String title;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "Thread_Posts",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -37,7 +40,7 @@ public class Thread implements Serializable {
     )
     private Set<Post> posts;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Board board;
 
     public Post addPost(Post post) {

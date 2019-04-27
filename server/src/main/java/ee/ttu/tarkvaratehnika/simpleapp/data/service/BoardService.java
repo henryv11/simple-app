@@ -1,12 +1,10 @@
 package ee.ttu.tarkvaratehnika.simpleapp.data.service;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.Board;
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.BoardConfiguration;
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.user.User;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.Board;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.BoardConfiguration;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.user.User;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.BoardConfigurationRepository;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.BoardRepository;
-import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.thread.PostRepository;
-import ee.ttu.tarkvaratehnika.simpleapp.data.repository.board.thread.ThreadRepository;
 import ee.ttu.tarkvaratehnika.simpleapp.data.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,16 +22,15 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private BoardConfigurationRepository boardConfigurationRepository;
 
     @Autowired
-    private BoardConfigurationRepository boardConfigurationRepository;
+    private UserRepository userRepository;
 
     public Board createBoard(Long userId, String title, String description, Boolean isPrivate) {
         // Check if user exists
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
-
             // Set required objects
             User user = userOptional.get();
 
@@ -62,18 +59,17 @@ public class BoardService {
         return null;
     }
 
-    public BoardConfiguration editBoardConfiguration(Long boardConfigurationId, Boolean isPrivate, Long administratorId,
-                                          List<Long> allowedUserIds, List<Long> blockedUserIds,
-                                          List<Long> moderatorIds) {
+    public BoardConfiguration editBoardConfiguration(Long boardId, Boolean isPrivate,
+                                                     Long administratorId, List<Long> allowedUserIds,
+                                                     List<Long> blockedUserIds, List<Long> moderatorIds) {
         // Check if administrator exists
         Optional<User> administratorOptional = userRepository.findById(administratorId);
         if (administratorOptional.isPresent()) {
-            // Check if board configuration exists
-            Optional<BoardConfiguration> boardConfigurationOptional =
-                    boardConfigurationRepository.findById(boardConfigurationId);
-            if (boardConfigurationOptional.isPresent()) {
+            // Check if board exists
+            Optional<Board> boardOptional = boardRepository.findById(boardId);
+            if (boardOptional.isPresent()) {
                 // Set required objects
-                BoardConfiguration boardConfiguration = boardConfigurationOptional.get();
+                BoardConfiguration boardConfiguration = boardOptional.get().getBoardConfiguration();
                 User administrator = administratorOptional.get();
                 List<User> moderators = userRepository.findAllById(moderatorIds);
                 List<User> allowedUsers = userRepository.findAllById(allowedUserIds);

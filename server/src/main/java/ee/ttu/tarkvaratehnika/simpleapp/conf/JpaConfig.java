@@ -16,14 +16,17 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"ee.ttu.tarkvaratehnika.simpleapp.data.repository"})
+@ComponentScan(basePackages = {
+        "ee.ttu.tarkvaratehnika.simpleapp.data.repository",
+        "ee.ttu.tarkvaratehnika.simpleapp.data.service"
+})
 public class JpaConfig {
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        factory.setPackagesToScan("ee.ttu.tarkvaratehnika.simpleapp.data.model");
+        factory.setPackagesToScan("ee.ttu.tarkvaratehnika.simpleapp.data.entity");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(additionalProperties());
         factory.afterPropertiesSet();
@@ -34,7 +37,7 @@ public class JpaConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:message_db;DB_CLOSE_DELAY=-1;MODE=MySQL;MV_STORE=FALSE;MVCC=FALSE");
+        dataSource.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL;MV_STORE=FALSE;MVCC=FALSE");
         dataSource.setUsername("sa");
         dataSource.setPassword("password");
         return dataSource;

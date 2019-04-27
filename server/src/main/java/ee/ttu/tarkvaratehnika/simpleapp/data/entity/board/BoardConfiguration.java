@@ -1,7 +1,10 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.model.board;
+package ee.ttu.tarkvaratehnika.simpleapp.data.entity.board;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.user.User;
-import lombok.*;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,7 +37,7 @@ public class BoardConfiguration implements Serializable {
     @JoinTable(
             name = "Board_Moderators",
             joinColumns = @JoinColumn(name = "moderator_id"),
-            inverseJoinColumns = @JoinColumn(name="board_configuration_id")
+            inverseJoinColumns = @JoinColumn(name = "board_configuration_id")
     )
     private Set<User> moderators;
 
@@ -42,7 +45,7 @@ public class BoardConfiguration implements Serializable {
     @JoinTable(
             name = "Board_Allowed_Users",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="board_configuration_id")
+            inverseJoinColumns = @JoinColumn(name = "board_configuration_id")
     )
     private Set<User> allowedUsers;
 
@@ -50,7 +53,7 @@ public class BoardConfiguration implements Serializable {
     @JoinTable(
             name = "Board_Blocked_Users",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="board_configuration_id")
+            inverseJoinColumns = @JoinColumn(name = "board_configuration_id")
     )
     private Set<User> blockedUsers;
 

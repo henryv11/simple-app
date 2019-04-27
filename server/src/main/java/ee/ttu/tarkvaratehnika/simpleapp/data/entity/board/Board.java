@@ -1,7 +1,10 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.model.board;
+package ee.ttu.tarkvaratehnika.simpleapp.data.entity.board;
 
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Thread;
-import lombok.*;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.thread.Thread;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

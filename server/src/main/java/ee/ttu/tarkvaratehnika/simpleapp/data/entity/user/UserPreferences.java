@@ -1,8 +1,11 @@
-package ee.ttu.tarkvaratehnika.simpleapp.data.model.user;
+package ee.ttu.tarkvaratehnika.simpleapp.data.entity.user;
 
-
-import ee.ttu.tarkvaratehnika.simpleapp.data.model.board.thread.Thread;
-import lombok.*;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.Board;
+import ee.ttu.tarkvaratehnika.simpleapp.data.entity.board.thread.Thread;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,10 +25,10 @@ public class UserPreferences implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "User_Followed_Threads",
             joinColumns = @JoinColumn(name = "thread_id"),
@@ -33,11 +36,11 @@ public class UserPreferences implements Serializable {
     )
     private Set<Thread> followedThreads;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(
             name = "User_Followed_Boards",
             joinColumns = @JoinColumn(name = "board_id"),
             inverseJoinColumns = @JoinColumn(name = "user_preferences_id")
     )
-    private Set<Thread> followedBoards;
+    private Set<Board> followedBoards;
 }
